@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Dragon Ball Z</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/estilos.css" />
+</head>
+
+<body class="bg-light">
+    <div id="app">
+        <header class="container py-3">
+            <h2 class="text-center text-white mb-4"> Catálogo de Personajes de Dragon Ball </h2>
+        </header>
+
+        <section class="container-fluid text-center"> <!-- Decidi que lo botones estuvieran en la parte superior, por estetica-->
+            <div class="container my-4">
+                <div class="card border rounded p-3">
+                    <div class="d-flex justify-content-around flex-wrap gap-2">
+                        <button class="btn btn-success" @click="filtrarPorCategoria('Saiyan')">Saiyan</button>
+                        <button class="btn btn-success" @click="filtrarPorCategoria('Namekian')">Namekusei</button>
+                        <button class="btn btn-success" @click="filtrarPorCategoria('Human')">Humano</button>
+                        <button class="btn btn-success" @click="filtrarPorCategoria('Frieza Race')">Raza de Freezer</button>
+                        <button class="btn btn-success" @click="filtrarPorCategoria('Android')">Androide</button>
+                        <button class="btn btn-dark" @click="filtrarPorCategoria('Todos')">Todos</button> <!-- Agregue otro boton para poder regresar todos sin tener que refrescar-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center"> <!-- Aqui comienza -->
+                <div class="card col-md-3 m-2 p-3" v-for="personaje in personajesFiltrados" :key="personaje.id"> <!-- v-for=recorre el arreglo del filtrado, :key=identifica por c/elemento-->
+                    <img class="card-img-top" :src="personaje.image" :title="personaje.name" style="height:250px; object-fit:contain">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ personaje.name }}</h5>
+                        <p class="card-text">Ki: {{ personaje.ki }}</p>
+                        <p><strong>Raza:</strong> {{ personaje.race }}</p>
+                        <button class="btn btn-primary btn-sm" @click="verDetalle(personaje)"> Ver más </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="detalleModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-success text-white">
+                            <h5 class="modal-title"> {{ personajeSeleccionado.name }} </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body text-start">
+                            <div class="text-center mb-3">
+                                <img class="img-fluid" :src="personajeSeleccionado.image" :alt="personajeSeleccionado.name" style="height:250px; object-fit:contain;">
+                            </div>
+
+                            <p><strong>Género:</strong> {{ personajeSeleccionado.gender }}</p>
+                            <p><strong>Raza:</strong> {{ personajeSeleccionado.race }}</p>
+                            <p><strong>Ki:</strong> {{ personajeSeleccionado.ki }}</p>
+
+                            <p><strong>Descripción:</strong></p>
+                            <p>{{ personajeSeleccionado.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/funciones.js"></script>
+</body>
+</html>
